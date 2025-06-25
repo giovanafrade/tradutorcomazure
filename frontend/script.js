@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusMessageEl = document.getElementById('status-message');
 
     //CONFIGURAÇÃO OBRIGATÓRIA
-    const subscriptionKey = "1vK9jBG9mBbT0MxFAPB9X9kppPvubKNdObJj1mlrd9idcsjSOobAJQQJ99BFACYeBjFXJ3w3AAAbACOGsnQ3";
+    const subscriptionKey = "1md70QE10o4HjYvGLT2LIhE7OLEhV7pySSel8WAHogLvrDxG3QfbJQQJ99BFACYeBjFXJ3w3AAAbACOGzEVi";
     const locationOrRegion = "eastus";
     const endpoint = "https://api.cognitive.microsofttranslator.com/";
     //FUNÇÃO QUE TRADUZ O TEXTO 
