@@ -23,10 +23,10 @@
 }
 .botao-traduzir{
     height: 20%;
-    width: 15%;
+    width: 8%;
     font-size: 3dvh;
     border-radius: 2rem;
-    margin-left: 350px;
+    margin-left: 28%;
     background-color: rgb(137, 184, 168);
     border-color: rgba(137, 184, 168, 0.115);
 }
