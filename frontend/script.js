@@ -27,11 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         statusMessageEl.textContent = 'Traduzindo...';
         translatedTextEl.value = ''; // Limpa o campo de resultado anterior.
 
-        // Monta a URL da API da Azure que vamos chamar.
-        let url = `${endpoint}translate?api-version=3.0&to=${toLanguage}`;
-        if (fromLanguage) {
-            url += `&from=${fromLanguage}`;
-        }
+
         // O bloco try...catch é usado para lidar com possíveis erros.
         try {
             // A função 'fetch' faz a requisição para a API.
