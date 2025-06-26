@@ -8,10 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const translatedTextEl = document.getElementById('translated-text');
     const statusMessageEl = document.getElementById('status-message');
 
-    //CONFIGURAÇÃO OBRIGATÓRIA
-    const subscriptionKey = "1md70QE10o4HjYvGLT2LIhE7OLEhV7pySSel8WAHogLvrDxG3QfbJQQJ99BFACYeBjFXJ3w3AAAbACOGzEVi";
-    const locationOrRegion = "eastus";
-    const endpoint = "https://api.cognitive.microsofttranslator.com/";
+    //CONFIGURAÇÃO OBRIGATÓRIA - Informações sensíveis foram removidas
+    const backendApiUrl = 'http://127.0.0.1:5000/api/translate';
     //FUNÇÃO QUE TRADUZ O TEXTO 
     async function translateText() {
         // Pega o texto do <textarea> e o idioma selecionado no <select>.
@@ -35,31 +33,36 @@ document.addEventListener('DOMContentLoaded', () => {
             url += `&from=${fromLanguage}`;
         }
         // O bloco try...catch é usado para lidar com possíveis erros.
-        try{
+        try {
             // A função 'fetch' faz a requisição para a API.
-            const response = await fetch(url, {
+            const response = await fetch(backendApiUrl, { // <-- Usa a URL do nosso backend
                 method: 'POST',
                 headers: {
-                    'Ocp-Apim-Subscription-Key': subscriptionKey,
-                    'Ocp-Apim-Subscription-Region': locationOrRegion,
+                    // <-- Cabeçalhos de autenticação REMOVIDOS
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify([{ 'Text': textToTranslate }])
-                });
+                // <-- O corpo agora usa o formato que NOSSA API espera
+                body: JSON.stringify({
+                    'text': textToTranslate,
+                    'to': toLanguage,
+                    'from': fromLanguage
+                })
+            });
             // A API respondeu. Agora, convertemos a resposta para um objeto JavaScript.
-                const data = await response.json();
-            // Se a resposta da API contém um erro (ex: chave inválida), nós o mostramos.
-            if (data.error) {
-                throw new Error(data.error.message);
+            const data = await response.json();
+
+            // Verificamos o status da resposta diretamente
+            if (!response.ok) {
+                throw new Error(data.error || 'Ocorreu um erro no servidor.');
             }
 
-            // Extraímos o texto traduzido do objeto de resposta.
-            const translation = data[0].translations[0].text;
-                                        
+            // Acessamos a tradução de forma muito mais direta
+            const translation = data.translation;
+
             // Colocamos o texto traduzido no <textarea> de resultado.
             translatedTextEl.value = translation;
             statusMessageEl.textContent = 'Tradução concluída!'; // Sucesso!
-                                
+
         } catch (error) {
             console.error("Ocorreu um erro:", error);
             statusMessageEl.textContent = `Erro na tradução: ${error.message}`;
